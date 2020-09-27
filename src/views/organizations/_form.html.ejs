@@ -1,0 +1,32 @@
+<form method="post" action="<%= createOrganizationPath %>">
+  <% if (locals.errors) { %>
+    <div class="errors">
+      <p>La organización no se pudo crear debido a los siguientes errores:</p>
+      <ul>
+        <% errors.forEach(error => { %>
+          <li><%= error.path %>: <%= error.message %></li>
+        <% }); %>
+      </ul>
+    </div>
+  <% } %>
+  
+  <div class="field">
+    <label for="name">Nombre</label>
+    <input type="text" id="name" name="name" value="<%= organization.name %>" />
+  </div>
+  <div class="field">
+    <label for="description">Descripción</label>
+    <textarea name="description" id="description" rows="4" cols="30"><%= organization.description %></textarea>
+  </div>
+  <div class="field">
+    <label for="logo">Logo</label>
+    <input type="text" id="logo" name="logo" value="<%= organization.logo %>" />
+  </div>
+  <div class="field">
+    <label for="url">URL</label>
+    <input type="text" id="url" name="url" value="<%= organization.url %>" />
+  </div>
+  <div class="actions">
+    <input type="submit" value="Crear" />
+  </div>
+</form>
