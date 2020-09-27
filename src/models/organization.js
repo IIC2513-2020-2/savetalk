@@ -18,8 +18,9 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {});
 
-  organization.associate = function associate() {
+  organization.associate = function associate(models) {
     // associations can be defined here. This method receives a models parameter.
+    organization.hasMany(models.event);
   };
 
   return organization;
