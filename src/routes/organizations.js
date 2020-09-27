@@ -47,9 +47,12 @@ router.post('organizations-create', '/', async (ctx) => {
   }
 });
 
-router.get('organization', '/:id', (ctx) => {
+router.get('organization', '/:id', async (ctx) => {
   const { organization } = ctx.state;
-  return ctx.render('organizations/show', { organization });
+  return ctx.render('organizations/show', {
+    organization,
+    events: await organization.getEvents(),
+  });
 });
 
 module.exports = router;

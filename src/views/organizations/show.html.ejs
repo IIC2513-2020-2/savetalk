@@ -2,3 +2,17 @@
 <img src="<%= organization.logo %>" />
 <p><%= organization.description %></p>
 <a href="<%= organization.url %>" target="_blank">Ir al sitio web</a>
+
+<div class="events">
+  <h2><%= events.length %> eventos organizados</h2>
+  <% if (events.length) { %>
+    <ul>
+      <% events.forEach((event) => { %>
+        <li class="event">
+          <h4><%= event.title %></h4>
+          <p><%= event.happensAt %></p>
+        </li>
+      <% }); %>
+    </ul>
+  <% } %>
+</div>
