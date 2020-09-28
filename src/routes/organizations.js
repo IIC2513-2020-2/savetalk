@@ -31,7 +31,7 @@ router.get('organizations-new', '/new', (ctx) => {
     organization,
     createOrganizationPath: ctx.router.url('organizations-create'),
   });
-})
+});
 
 router.post('organizations-create', '/', async (ctx) => {
   const organization = ctx.orm.organization.build(ctx.request.body);

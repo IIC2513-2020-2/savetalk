@@ -1,6 +1,12 @@
-<h1>Hello world</h1>
-<p>
-  App web version
-  <%= appVersion %>
-</p>
-<div id="react-app">Here a React app will be rendered</div>
+<main class="home">
+  <h1>Eventos destacados</h1>
+  <ul>
+    <% events.forEach((event) => { %>
+      <li>
+        <h3><%= event.title %></h3>
+        <p><a href="<%= organizationPath(event.organization.id) %>"><%= event.organization.name %></a></p>
+        <p><%= event.happensAt.toDateString() %> (por <em><%= event.platform %></em>)</p>
+      </li>
+    <% }) %>
+  </ul>
+</main>

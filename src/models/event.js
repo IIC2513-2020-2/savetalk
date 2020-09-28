@@ -1,4 +1,4 @@
-'use strict';
+
 module.exports = (sequelize, DataTypes) => {
   const event = sequelize.define('event', {
     title: {
@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
-    description: { 
+    description: {
       type: DataTypes.TEXT,
     },
     happensAt: {
@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
     },
   }, {});
-  event.associate = function(models) {
+  event.associate = function associate(models) {
     // associations can be defined here
     event.belongsTo(models.organization);
   };
