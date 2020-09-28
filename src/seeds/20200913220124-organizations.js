@@ -2,7 +2,7 @@
 const faker = require('faker');
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface) => {
     /*
       Add altering commands here.
       Return a promise to correctly handle asynchronicity.
@@ -30,7 +30,7 @@ module.exports = {
         logo: 'https://imfd.cl/wp-content/themes/understrap-child/images/header-logo-en.png',
         createdAt: new Date(),
         updatedAt: new Date(),
-      }
+      },
     ];
 
     const organizationsArray = [...initialData];
@@ -48,8 +48,8 @@ module.exports = {
 
     return queryInterface.bulkInsert('organizations', organizationsArray);
   },
-
-  down: (queryInterface, Sequelize) => {
+  // eslint-disable-next-line arrow-body-style
+  down: (queryInterface) => {
     /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.
@@ -57,5 +57,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
+    return queryInterface.bulkDelete('organizations', null, {});
   },
 };

@@ -15,7 +15,7 @@ function getRandomPlatform() {
 }
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (queryInterface) => {
     /*
       Add altering commands here.
       Return a promise to correctly handle asynchronicity.
@@ -27,7 +27,7 @@ module.exports = {
       }], {});
     */
     const orgs = await queryInterface.sequelize.query(
-      `SELECT id FROM organizations`
+      'SELECT id FROM organizations',
     );
     const orgIds = orgs[0].map(({ id }) => id);
     const eventsBulkInsertPromises = orgIds.map((organizationId) => {
@@ -49,11 +49,11 @@ module.exports = {
         });
       }
       return queryInterface.bulkInsert('events', eventsData);
-    })
+    });
     return Promise.all(eventsBulkInsertPromises);
   },
-
-  down: (queryInterface, Sequelize) => {
+  // eslint-disable-next-line arrow-body-style
+  down: (queryInterface) => {
     /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.
@@ -61,5 +61,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
-  }
+    return queryInterface.bulkDelete('events', null, {});
+  },
 };
