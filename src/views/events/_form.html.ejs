@@ -1,0 +1,54 @@
+<form method="post" action="<%= createEventPath %>">
+  <% if (locals.errors) { %>
+    <div class="errors">
+      <p>El evento no se pudo crear debido a los siguientes errores:</p>
+      <ul>
+        <% errors.forEach(error => { %>
+          <li><%= error.path %>: <%= error.message %></li>
+        <% }); %>
+      </ul>
+    </div>
+  <% } %>
+  
+  <div class="field">
+    <label for="name">Título</label>
+    <input type="text" id="title" name="title" value="<%= event.title %>" />
+  </div>
+  <div class="field">
+    <label for="description">Descripción</label>
+    <textarea name="description" id="description" rows="4" cols="30"><%= event.description %></textarea>
+  </div>
+  <div class="field">
+    <label for="happensAt">Fecha del evento</label>
+    <input type="date" id="happensAt" name="happensAt" value="<%= event.happensAt %>" />
+  </div>
+  <div class="field">
+    <label for="platform">Plataforma de streaming</label>
+    <input type="text" id="platform" name="platform" value="<%= event.platform %>" />
+  </div>
+  <div class="field">
+    <label for="url">URL</label>
+    <input type="text" id="url" name="url" value="<%= event.url %>" />
+  </div>
+  <div class="field">
+    <label for="photo">Foto</label>
+    <input type="text" id="photo" name="photo" value="<%= event.photo %>" />
+  </div>
+  <div class="field">
+    <label for="registration">Link de registro</label>
+    <input type="text" id="registration" name="registration" value="<%= event.registration %>" />
+  </div>
+  <div class="field">
+    <label for="organization">Organización</label>
+    <select id="organization" name="organizationId">
+      <% organizations.forEach((organization) => { %>
+        <option value="<%= organization.id %>" <%= event.organizationId == organization.id ? 'selected' : '' %>>
+          <%= organization.name %>
+        </option>
+      <% }) %>
+    </select>
+  </div>
+  <div class="actions">
+    <input type="submit" value="Crear" />
+  </div>
+</form>
