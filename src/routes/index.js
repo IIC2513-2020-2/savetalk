@@ -1,10 +1,13 @@
 const KoaRouter = require('koa-router');
-const pkg = require('../../package.json');
 
 const router = new KoaRouter();
 
 router.get('/', async (ctx) => {
-  await ctx.render('index', { appVersion: pkg.version });
+  const events = await ctx.orm.event.findAll({ include: 'organization' });
+  await ctx.render('index', {
+    events,
+    organizationPath: (id) => ctx.router.url('organization', id),
+  });
 });
 
 module.exports = router;

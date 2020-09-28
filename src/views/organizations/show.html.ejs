@@ -10,7 +10,7 @@
       <% events.forEach((event) => { %>
         <li class="event">
           <h4><%= event.title %></h4>
-          <p><%= event.happensAt %></p>
+          <p><%= event.happensAt.toDateString() %> (por <em><%= event.platform %></em>)</p>
         </li>
       <% }); %>
     </ul>
