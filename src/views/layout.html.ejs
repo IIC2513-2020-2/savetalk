@@ -11,6 +11,20 @@
 
   <body>
     <header>
+      <div class="logo">
+        <a href="/">Savetalk</a>
+      </div>
+      <div id="user-bar">
+        <% if (locals.currentUser) { %>
+          <%= currentUser.email %>
+          <form action="<%= destroySessionPath %>" method="post">
+            <input type="hidden" name="_method" value="delete" />
+            <input type="submit" value="Cerrar Sesión" />
+          </form>
+        <% } else { %>
+          <a href="<%= newSessionPath %>">Iniciar sesión</a>
+        <% } %>
+      </div>
     </header>
     <%- body %>
     <script src="<%= assetPath('app.js') %>"></script>
