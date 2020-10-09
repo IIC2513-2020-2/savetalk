@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 
 module.exports = (sequelize, DataTypes) => {
   const user = sequelize.define('user', {
@@ -29,7 +30,16 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
-  }, {});
+  }, {
+    hooks: {
+      beforeSave: async (instance) => {
+        if (instance.changed('password')) {
+          /* eslint-disable-next-line no-param-reassign */
+          instance.password = await bcrypt.hash(instance.password, 10);
+        }
+      },
+    },
+  });
   /* eslint-disable-next-line no-unused-vars */
   user.associate = function associate(models) {
     // associations can be defined here
