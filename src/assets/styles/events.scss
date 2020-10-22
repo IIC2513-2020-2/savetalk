@@ -28,6 +28,32 @@
   }
 }
 
+.event {
+  .event-info {
+    h1 {
+      font-size: 2em;
+      margin-bottom: 0;
+    }
+
+    p {
+      margin: 10px 0 0;
+    }
+  }
+
+  .event-detail {
+    padding-top: 20px;
+    display: flex;
+
+    & > div {
+      flex: 1;
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
 @media screen and (min-width: 501px) {
   .events {
     grid-template-columns: repeat(2, 1fr);

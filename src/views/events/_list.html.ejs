@@ -1,8 +1,8 @@
 <div class="events">
   <% events.forEach((event) => { %>
     <article class="event-card">
-      <a href=""><img src="<%= event.photo %>" /></a>
-      <h3><a href=""><%= event.title %></a></h3>
+      <a href="<%= eventPath(event.id) %>"><img src="<%= event.photo %>" /></a>
+      <h3><a href="<%= eventPath(event.id) %>"><%= event.title %></a></h3>
       <p><a href="<%= organizationPath(event.organization.id) %>"><%= event.organization.name %></a></p>
       <p><%= event.happensAt.toDateString() %> (por <em><%= event.platform %></em>)</p>
     </article>
