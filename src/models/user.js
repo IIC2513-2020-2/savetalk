@@ -40,9 +40,12 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
   });
-  /* eslint-disable-next-line no-unused-vars */
   user.associate = function associate(models) {
     // associations can be defined here
+    user.belongsToMany(models.event, {
+      through: 'attendances',
+      foreignKey: 'userId',
+    });
   };
   return user;
 };

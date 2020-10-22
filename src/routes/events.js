@@ -13,6 +13,13 @@ const PERMITTED_FIELDS = [
   'organizationId',
 ];
 
+router.param('id', async (id, ctx, next) => {
+  const event = await ctx.orm.event.findByPk(id, { include: ['organization', 'attendees'] });
+  if (!event) ctx.throw(404);
+  ctx.state.event = event;
+  return next();
+});
+
 router.get('events-new', '/new', async (ctx) => {
   const event = ctx.orm.event.build();
   const organizations = await ctx.orm.organization.findAll();
@@ -37,6 +44,24 @@ router.post('events-create', '/', async (ctx) => {
       createEventPath: ctx.router.url('events-create'),
     });
   }
+});
+
+router.get('event', '/:id', async (ctx) => {
+  const { currentUser, event } = ctx.state;
+  const attendeeIds = event.attendees.map(({ id }) => id);
+  const isCurrentUserAttending = !!currentUser && attendeeIds.includes(currentUser.id);
+  return ctx.render('events/show', {
+    event,
+    isCurrentUserAttending,
+    organizationPath: (id) => ctx.router.url('organization', id),
+    attendancePath: ctx.router.url('event-attendance', event.id),
+  });
+});
+
+router.post('event-attendance', '/:id/attendances', async (ctx) => {
+  const { currentUser, event } = ctx.state;
+  await event.addAttendee(currentUser);
+  ctx.redirect(ctx.router.url('event', event.id));
 });
 
 module.exports = router;

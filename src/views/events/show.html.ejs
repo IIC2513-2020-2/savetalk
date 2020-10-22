@@ -1,0 +1,31 @@
+<article class="event">
+  <div class="event-info">
+    <h1><%= event.title %></h1>
+    <p>
+      Organizado por:
+      <a href="<%= organizationPath(event.organization.id) %>"><%= event.organization.name %></a>
+    </p>
+  </div>
+  <div class="event-detail">
+    <div>
+      <img src="<%= event.photo %>" />
+      <% if (locals.currentUser) { %>
+        <form action="<%= attendancePath %>" method="post">
+          <button
+            class="btn"
+            type="submit"
+            <%= isCurrentUserAttending ? 'disabled' : '' %>
+          >
+            <%= isCurrentUserAttending ? 'Ya marcaste tu asistencia' : 'Asistiré' %>
+          </button>
+        </form>
+      <% } %>
+    </div>
+    <div>
+      <ul>
+        <li><strong>Cuándo</strong>: <%= event.happensAt.toDateString() %></li>
+        <li><strong>Dónde</strong>: Streaming por <em><%= event.platform %></em></li>
+      </ul>
+    </div>
+  </div>
+</div>

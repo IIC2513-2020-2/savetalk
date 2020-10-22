@@ -1,0 +1,21 @@
+.btn {
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 0.25rem;
+  padding: 15px;
+  border: none;
+  font-size: 1em;
+  background-color: $savetalk-blue;
+  color: white;
+  line-height: 1.5;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($savetalk-blue, 10%);
+  }
+
+  &[disabled] {
+    background-color: lighten($savetalk-gray, 50%);
+    cursor: not-allowed;
+  }
+}
