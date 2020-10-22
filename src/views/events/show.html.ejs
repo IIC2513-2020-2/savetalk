@@ -9,6 +9,17 @@
   <div class="event-detail">
     <div>
       <img src="<%= event.photo %>" />
+      <% if (locals.currentUser) { %>
+        <form action="<%= attendancePath %>" method="post">
+          <button
+            class="btn"
+            type="submit"
+            <%= isCurrentUserAttending ? 'disabled' : '' %>
+          >
+            <%= isCurrentUserAttending ? 'Ya marcaste tu asistencia' : 'Asistiré' %>
+          </button>
+        </form>
+      <% } %>
     </div>
     <div>
       <ul>
