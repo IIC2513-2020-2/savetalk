@@ -11,8 +11,12 @@ const router = new KoaRouter();
 
 router.use(async (ctx, next) => {
   Object.assign(ctx.state, {
-    newSessionPath: ctx.router.url('session-new'),
-    destroySessionPath: ctx.router.url('session-destroy'),
+    paths: {
+      users: ctx.router.url('users'),
+      organizations: ctx.router.url('organizations'),
+      newSession: ctx.router.url('session-new'),
+      destroySession: ctx.router.url('session-destroy'),
+    },
   });
   return next();
 });

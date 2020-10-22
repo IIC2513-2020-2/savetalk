@@ -1,0 +1,28 @@
+<header>
+  <div class="container">
+    <div class="logo">
+      <a href="/">Savetalk</a>
+    </div>
+    <nav>
+      <ul>
+        <li>
+          <a href="<%= paths.organizations %>">Organizaciones</a>
+        </li>
+        <li>
+          <a href="<%= paths.users %>">Usuarios</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="user-controls">
+      <% if (locals.currentUser) { %>
+        <span><%= currentUser.email %></span>
+        <form action="<%= paths.destroySession %>" method="post">
+          <input type="hidden" name="_method" value="delete" />
+          <input type="submit" value="Salir" />
+        </form>
+      <% } else { %>
+        <a href="<%= paths.newSession %>">Iniciar sesión</a>
+      <% } %>
+    </div>
+  </div>
+</header>
