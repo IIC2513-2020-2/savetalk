@@ -1,0 +1,41 @@
+.events {
+  display: grid;
+  gap: 20px;
+}
+
+.event-card {
+  border: 1px solid $savetalk-gray;
+  border-radius: 5px;
+  padding: 10px;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  a {
+    color: $savetalk-gray;
+  }
+
+  h3 {
+    font-size: 1.4em;
+    a {
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 501px) {
+  .events {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 961px) {
+  .events {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
