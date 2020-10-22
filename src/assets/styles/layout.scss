@@ -1,4 +1,86 @@
+@import url('//fonts.googleapis.com/css?family=Roboto');
+
 html, body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: $savetalk-gray;
   margin: 0;
   padding: 0;
+}
+
+.container {
+  margin: 0 auto;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  border-bottom: 1px solid #777;
+
+  a {
+    text-decoration: none;
+    color: $savetalk-gray;
+  }
+
+  .container {
+    display: flex;
+  }
+
+  .logo {
+    text-transform: lowercase;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 20px;
+  }
+
+  nav {
+    flex: 1;
+
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      display: flex;
+
+      li {
+        a {
+          display: inline-block;
+          padding: 20px;
+
+          &:hover {
+            background-color: $savetalk-gray;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+
+  .user-controls {
+    display: flex;
+    align-items: center;
+
+    span {
+      margin-right: 10px;
+    }
+  }
+}
+
+main {
+  padding: 10px 0;
+}
+
+@media screen and (min-width: 501px) {
+  .container {
+    width: 90%;
+  }
+}
+
+@media screen and (min-width: 961px) {
+  .container {
+    width: 80%;
+  }
 }

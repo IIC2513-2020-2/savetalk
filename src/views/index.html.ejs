@@ -1,13 +1,10 @@
-<main class="home">
-  <a href="<%= usersPath %>">Usuarios</a>
-  <h1>Eventos destacados</h1>
-  <ul>
-    <% events.forEach((event) => { %>
-      <li>
-        <h3><%= event.title %></h3>
-        <p><a href="<%= organizationPath(event.organization.id) %>"><%= event.organization.name %></a></p>
-        <p><%= event.happensAt.toDateString() %> (por <em><%= event.platform %></em>)</p>
-      </li>
-    <% }) %>
-  </ul>
-</main>
+<h1>Eventos destacados</h1>
+<ul>
+  <% events.forEach((event) => { %>
+    <li>
+      <h3><%= event.title %></h3>
+      <p><a href="<%= organizationPath(event.organization.id) %>"><%= event.organization.name %></a></p>
+      <p><%= event.happensAt.toDateString() %> (por <em><%= event.platform %></em>)</p>
+    </li>
+  <% }) %>
+</ul>

@@ -7,7 +7,6 @@ router.get('/', async (ctx) => {
   await ctx.render('index', {
     events,
     organizationPath: (id) => ctx.router.url('organization', id),
-    usersPath: ctx.router.url('users'),
   });
 });
 
