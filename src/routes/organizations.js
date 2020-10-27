@@ -22,6 +22,7 @@ router.get('organizations', '/', async (ctx) => {
     organizations,
     organizationPath: (id) => ctx.router.url('organization', id),
     newOrganizationPath: ctx.router.url('organizations-new'),
+    editOrganizationPath: (id) => ctx.router.url('organizations-edit', id),
   });
 });
 
@@ -29,7 +30,7 @@ router.get('organizations-new', '/new', (ctx) => {
   const organization = ctx.orm.organization.build();
   return ctx.render('organizations/new', {
     organization,
-    createOrganizationPath: ctx.router.url('organizations-create'),
+    submitPath: ctx.router.url('organizations-create'),
   });
 });
 
@@ -42,7 +43,7 @@ router.post('organizations-create', '/', async (ctx) => {
     await ctx.render('organizations/new', {
       organization,
       errors: error.errors,
-      createOrganizationPath: ctx.router.url('organizations-create'),
+      submitPath: ctx.router.url('organizations-create'),
     });
   }
 });
@@ -53,6 +54,28 @@ router.get('organization', '/:id', async (ctx) => {
     organization,
     events: await organization.getEvents(),
   });
+});
+
+router.get('organizations-edit', '/:id/edit', (ctx) => {
+  const { organization } = ctx.state;
+  return ctx.render('organizations/edit', {
+    organization,
+    submitPath: ctx.router.url('organizations-update', organization.id),
+  });
+});
+
+router.patch('organizations-update', '/:id', async (ctx) => {
+  const { organization } = ctx.state;
+  try {
+    await organization.update(ctx.request.body, { fields: PERMITTED_FIELDS });
+    ctx.redirect(ctx.router.url('organizations'));
+  } catch (error) {
+    await ctx.render('organizations/edit', {
+      organization,
+      errors: error.errors,
+      submitPath: ctx.router.url('organizations-update', organization.id),
+    });
+  }
 });
 
 module.exports = router;
