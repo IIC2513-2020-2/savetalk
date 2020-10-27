@@ -65,8 +65,14 @@ router.get('organizations-edit', '/:id/edit', (ctx) => {
 });
 
 router.patch('organizations-update', '/:id', async (ctx) => {
-  const { organization } = ctx.state;
+  const { cloudinary, organization } = ctx.state;
   try {
+    const { logo } = ctx.request.files;
+    if (logo.size > 0) {
+      // This does now allow to update existing images. It should be handled
+      const uploadedImage = await cloudinary.uploader.upload(logo.path);
+      ctx.request.body.logo = uploadedImage.public_id;
+    }
     await organization.update(ctx.request.body, { fields: PERMITTED_FIELDS });
     ctx.redirect(ctx.router.url('organizations'));
   } catch (error) {
