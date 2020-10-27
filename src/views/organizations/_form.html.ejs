@@ -1,4 +1,4 @@
-<form method="post" action="<%= createOrganizationPath %>">
+<form method="post" action="<%= submitPath %>" enctype="multipart/form-data">
   <% if (locals.errors) { %>
     <div class="errors">
       <p>La organización no se pudo crear debido a los siguientes errores:</p>
@@ -8,6 +8,10 @@
         <% }); %>
       </ul>
     </div>
+  <% } %>
+
+  <% if (!organization.isNewRecord) { %>
+    <input type="hidden" name="_method" value="patch" />
   <% } %>
   
   <div class="field">
@@ -20,13 +24,13 @@
   </div>
   <div class="field">
     <label for="logo">Logo</label>
-    <input type="text" id="logo" name="logo" value="<%= organization.logo %>" />
+    <input type="file" id="logo" name="logo" />
   </div>
   <div class="field">
     <label for="url">URL</label>
     <input type="text" id="url" name="url" value="<%= organization.url %>" />
   </div>
   <div class="actions">
-    <input type="submit" value="Crear" />
+    <input type="submit" value="<%= organization.isNewRecord ? 'Crear' : 'Modificar' %>" />
   </div>
 </form>

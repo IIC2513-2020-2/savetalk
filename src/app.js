@@ -7,6 +7,7 @@ const koaStatic = require('koa-static');
 const render = require('koa-ejs');
 const session = require('koa-session');
 const override = require('koa-override-method');
+const cloudinary = require('cloudinary').v2;
 const assets = require('./assets');
 const mailer = require('./mailers');
 const routes = require('./routes');
@@ -82,6 +83,13 @@ render(app, {
 });
 
 mailer(app);
+
+app.use((ctx, next) => {
+  if (process.env.CLOUDINARY_URL) {
+    ctx.state.cloudinary = cloudinary;
+  }
+  return next();
+});
 
 // Routing middleware
 app.use(routes.routes());
