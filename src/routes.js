@@ -10,6 +10,21 @@ const users = require('./routes/users');
 const router = new KoaRouter();
 
 router.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    switch (err.status) {
+      case 401:
+        ctx.app.emit('error', err, ctx);
+        ctx.redirect(ctx.router.url('session-new'));
+        break;
+      default:
+        throw err;
+    }
+  }
+});
+
+router.use(async (ctx, next) => {
   Object.assign(ctx.state, {
     paths: {
       users: ctx.router.url('users'),
