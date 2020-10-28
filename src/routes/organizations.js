@@ -9,6 +9,20 @@ const PERMITTED_FIELDS = [
   'logo',
 ];
 
+const PROTECTED_PATHS = [
+  '/new',
+  '/:id/edit',
+];
+
+function checkAuth(ctx, next) {
+  const { currentUser } = ctx.state;
+  if (!currentUser) ctx.throw(401);
+
+  return next();
+}
+
+router.use(PROTECTED_PATHS, checkAuth);
+
 router.param('id', async (id, ctx, next) => {
   const organization = await ctx.orm.organization.findByPk(id);
   if (!organization) ctx.throw(404);
@@ -34,7 +48,7 @@ router.get('organizations-new', '/new', (ctx) => {
   });
 });
 
-router.post('organizations-create', '/', async (ctx) => {
+router.post('organizations-create', '/', checkAuth, async (ctx) => {
   const organization = ctx.orm.organization.build(ctx.request.body);
   try {
     await organization.save({ fields: PERMITTED_FIELDS });
@@ -64,7 +78,7 @@ router.get('organizations-edit', '/:id/edit', (ctx) => {
   });
 });
 
-router.patch('organizations-update', '/:id', async (ctx) => {
+router.patch('organizations-update', '/:id', checkAuth, async (ctx) => {
   const { cloudinary, organization } = ctx.state;
   try {
     const { logo } = ctx.request.files;

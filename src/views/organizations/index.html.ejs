@@ -1,10 +1,14 @@
-<a href="<%= newOrganizationPath %>">Agregar organización</a>
+<% if (locals.currentUser) { %>
+  <a href="<%= newOrganizationPath %>">Agregar organización</a>
+<% } %>
 
 <% organizations.forEach(organization => { %>
   <div>
     <h2><%= organization.name %></h2>
     <p><%= organization.description %></p>
     <a href="<%= organizationPath(organization.id) %>">Ver más</a>
-    <a href="<%= editOrganizationPath(organization.id) %>">Editar</a>
+    <% if (locals.currentUser) { %>
+      <a href="<%= editOrganizationPath(organization.id) %>">Editar</a>
+    <% } %>
   </div>
 <% }) %>
