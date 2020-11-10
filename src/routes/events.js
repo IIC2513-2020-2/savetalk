@@ -54,11 +54,22 @@ router.get('event', '/:id', async (ctx) => {
     event,
     isCurrentUserAttending,
     organizationPath: (id) => ctx.router.url('organization', id),
-    attendancePath: ctx.router.url('event-attendance', event.id),
+    attendancePath: ctx.router.url('event-create-attendance', event.id),
   });
 });
 
-router.post('event-attendance', '/:id/attendances', async (ctx) => {
+router.get('event-attendances', '/:id/attendances', async (ctx) => {
+  const { event } = ctx.state;
+  switch (ctx.accepts(['json'])) {
+    case 'json':
+      ctx.body = event.attendees.map(({ id, email }) => ({ id, email }));
+      break;
+    default:
+      break;
+  }
+});
+
+router.post('event-create-attendance', '/:id/attendances', async (ctx) => {
   const { currentUser, event } = ctx.state;
   await event.addAttendee(currentUser);
   ctx.redirect(ctx.router.url('event', event.id));

@@ -19,6 +19,8 @@
             <%= isCurrentUserAttending ? 'Ya marcaste tu asistencia' : 'Asistiré' %>
           </button>
         </form>
+      <% } else { %>
+        <a href="<%= paths.newSession %>" class="btn">Asistiré</a>
       <% } %>
     </div>
     <div>
