@@ -10,7 +10,8 @@
     <div>
       <img src="<%= event.photo %>" />
       <% if (locals.currentUser) { %>
-        <form action="<%= attendancePath %>" method="post">
+        <div id="rsvp-app" data-event-id="<%= event.id %>" data-user-id="<%= currentUser.id %>"></div>
+        <!-- <form action="<%= attendancePath %>" method="post">
           <button
             class="btn"
             type="submit"
@@ -18,7 +19,7 @@
           >
             <%= isCurrentUserAttending ? 'Ya marcaste tu asistencia' : 'Asistiré' %>
           </button>
-        </form>
+        </form> -->
       <% } else { %>
         <a href="<%= paths.newSession %>" class="btn">Asistiré</a>
       <% } %>

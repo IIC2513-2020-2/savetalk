@@ -60,13 +60,7 @@ router.get('event', '/:id', async (ctx) => {
 
 router.get('event-attendances', '/:id/attendances', async (ctx) => {
   const { event } = ctx.state;
-  switch (ctx.accepts(['json'])) {
-    case 'json':
-      ctx.body = event.attendees.map(({ id, email }) => ({ id, email }));
-      break;
-    default:
-      break;
-  }
+  ctx.body = event.attendees.map(({ id, email }) => ({ id, email }));
 });
 
 router.post('event-create-attendance', '/:id/attendances', async (ctx) => {
