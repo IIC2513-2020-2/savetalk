@@ -65,8 +65,22 @@ router.get('event-attendances', '/:id/attendances', async (ctx) => {
 
 router.post('event-create-attendance', '/:id/attendances', async (ctx) => {
   const { currentUser, event } = ctx.state;
-  await event.addAttendee(currentUser);
-  ctx.redirect(ctx.router.url('event', event.id));
+  const { userId } = ctx.request.body;
+  const user = userId ? (await ctx.orm.user.findByPk(userId)) : currentUser;
+  if (!user) ctx.throw(422);
+  await event.addAttendee(user);
+  switch (ctx.accepts(['html', 'json'])) {
+    case 'html':
+      ctx.redirect(ctx.router.url('event', event.id));
+      break;
+    case 'json':
+      ctx.status = 201;
+      ctx.body = { message: 'Attendee added' };
+      break;
+    default:
+      ctx.throw(406);
+      break;
+  }
 });
 
 module.exports = router;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { hot } from 'react-hot-loader';
+import Button from './RsvpButton';
 
 function buildAttendancesPath(eventId) {
   return `/events/${eventId}/attendances`;
@@ -8,6 +9,17 @@ function buildAttendancesPath(eventId) {
 const fetchAttendances = (eventId) => (
   fetch(buildAttendancesPath(eventId))
     .then(response => response.json())
+);
+
+const createAttendance = (eventId, userId) => (
+  fetch(buildAttendancesPath(eventId), {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ userId }),
+  })
 );
 
 function RsvpApp(props) {
@@ -24,16 +36,26 @@ function RsvpApp(props) {
       });
   }, []);
 
-  if (loading) return <p>Cargando...</p>;
+  const handleRsvpClick = () => {
+    setLoading(true);
+    createAttendance(eventId, userId)
+      .then((response) => {
+        if (response.status === 201) {
+          setUserAttending(true);
+          setLoading(false);
+        }
+      })
+  };
 
   return (
-    <button
-      className="btn"
-      type="submit"
-      disabled={userAttending}
-    >
-      {userAttending ? 'Ya marcaste tu asistencia' : 'Asistiré'}
-    </button>
+    <Button
+      disabled={loading || userAttending}
+      onClick={handleRsvpClick}
+      text={loading
+        ? 'Cargando...'
+        : (userAttending ? 'Ya marcaste tu asistencia' : 'Asistiré')
+      }
+    />
   );
 };
 
