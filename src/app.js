@@ -11,6 +11,7 @@ const cloudinary = require('cloudinary').v2;
 const assets = require('./assets');
 const mailer = require('./mailers');
 const routes = require('./routes');
+const apiRoutes = require('./routes/api');
 const orm = require('./models');
 
 // App constructor
@@ -90,6 +91,9 @@ app.use((ctx, next) => {
   }
   return next();
 });
+
+// API routing middleware
+app.use(apiRoutes.routes());
 
 // Routing middleware
 app.use(routes.routes());
