@@ -1,6 +1,7 @@
 const path = require('path');
 const Koa = require('koa');
 const koaBody = require('koa-body');
+const koaCors = require('@koa/cors');
 const koaLogger = require('koa-logger');
 const koaFlashMessage = require('koa-flash-message').default;
 const koaStatic = require('koa-static');
@@ -60,6 +61,8 @@ app.use(koaStatic(path.join(__dirname, '..', 'build'), {}));
 app.use(session({
   maxAge: 14 * 24 * 60 * 60 * 1000, // 2 weeks
 }, app));
+
+app.use(koaCors());
 
 // flash messages support
 app.use(koaFlashMessage);
